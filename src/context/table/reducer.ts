@@ -1,4 +1,4 @@
-import { ITableContext } from './types'
+import { IBoardContext } from './types'
 
 export type Action =
   | { type: 'ADD_TASK' }
@@ -7,9 +7,9 @@ export type Action =
   | { type: 'REORDER_TASK_IN_COLUMN' }
   | { type: 'REORDER_TASK_BETWEEN_COLUMNS' }
   | { type: 'ADD_COLUMN' }
-  | { type: 'ADD_TABLE' }
+  | { type: 'ADD_TBoard' }
 
-export const reducer = (state: ITableContext, action: Action) => {
+export const reducer = (state: IBoardContext, action: Action) => {
   switch (action.type) {
     case 'ADD_TASK':
       return state

@@ -1,23 +1,23 @@
 import { createContext, useReducer } from 'react'
 import { Action, reducer } from './reducer'
-import { ITableContext } from './types'
+import { IBoardContext } from './types'
 
 const initialState = { currentTable: null, tables: {} }
 
-export const TableContext = createContext<
-  [ITableContext, React.Dispatch<Action>]
+export const BoardContext = createContext<
+  [IBoardContext, React.Dispatch<Action>]
 >([initialState, () => initialState])
 
 interface Props {
   children: React.ReactNode
 }
 
-export const TableProvider = ({ children }: Props) => {
+export const BoardProvider = ({ children }: Props) => {
   const [table, dispatch] = useReducer(reducer, initialState)
 
   return (
-    <TableContext.Provider value={[table, dispatch]}>
+    <BoardContext.Provider value={[table, dispatch]}>
       {children}
-    </TableContext.Provider>
+    </BoardContext.Provider>
   )
 }

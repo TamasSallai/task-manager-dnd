@@ -1,23 +1,23 @@
 export interface ITask {
   id: string
-  title: string
+  name: string
 }
 
 export interface IColumn {
   id: string
-  title: string
+  name: string
   tasks: ITask[]
 }
 
-export interface ITable {
+export interface IBoard {
   id: string
-  title: string
+  name: string
   columns: {
     [columnId: string]: IColumn
   }
 }
 
-export interface ITableContext {
-  currentTable: ITable | null
-  tables: { [id: string]: ITable }
+export interface IBoardContext {
+  currentTable: IBoard | null
+  tables: { [id: string]: IBoard }
 }

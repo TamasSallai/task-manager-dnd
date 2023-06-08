@@ -1,4 +1,4 @@
 import { useContext } from 'react'
-import { TableContext } from './state'
+import { BoardContext } from './state'
 
-export const useTableContext = () => useContext(TableContext)
+export const useTableContext = () => useContext(BoardContext)
