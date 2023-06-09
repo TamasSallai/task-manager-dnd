@@ -1,5 +1,8 @@
+import Board from './components/Board'
+import './App.css'
+
 function App() {
-  return <div></div>
+  return <Board />
 }
 
 export default App
