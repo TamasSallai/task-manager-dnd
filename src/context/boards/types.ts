@@ -18,6 +18,6 @@ export interface IBoard {
 }
 
 export interface IBoardContext {
-  currentTable: IBoard | null
-  tables: { [id: string]: IBoard }
+  currentBoard: IBoard | null
+  boards: { [id: string]: IBoard }
 }

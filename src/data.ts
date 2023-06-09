@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { IBoard } from './context/table/types'
+import { IBoard } from './context/boards/types'
 
 export const initialTableData: IBoard = {
   id: 'tableId',

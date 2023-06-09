@@ -2,7 +2,7 @@ import { createContext, useReducer } from 'react'
 import { Action, reducer } from './reducer'
 import { IBoardContext } from './types'
 
-const initialState = { currentTable: null, tables: {} }
+const initialState = { currentBoard: null, boards: {} }
 
 export const BoardContext = createContext<
   [IBoardContext, React.Dispatch<Action>]

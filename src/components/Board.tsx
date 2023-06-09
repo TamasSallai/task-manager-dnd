@@ -6,17 +6,27 @@ import {
   DragEndEvent,
   DragOverlay,
 } from '@dnd-kit/core'
-import { ITask } from '../context/table/types'
+import { ITask } from '../context/boards/types'
 import Column from './Column'
-import { initialTableData } from '../data'
+
 import SortableTask from './SortableTask'
+import { useBoardContext } from '../context/boards/hook'
 
 const Board = () => {
+  const { currentBoard } = useBoardContext()
   const [dragging, setDragging] = useState<ITask | null>(null)
-  const { columns } = initialTableData
 
   const handleDragStart = (e: DragStartEvent) => {
-    console.log('drag start')
+    const { active } = e
+    const columnId = active.data.current?.sortable.containerId
+    console.log(currentBoard.columns)
+
+    const activeTask = initialTableData.columns[columnId].tasks.find(
+      (task) => task.id === active.id
+    )
+    if (activeTask) {
+      setDragging(activeTask)
+    }
   }
 
   const handleDragOver = (e: DragOverEvent) => {
@@ -25,6 +35,12 @@ const Board = () => {
 
   const handleDragEnd = (e: DragEndEvent) => {
     console.log('drag end')
+    const { active, over } = e
+    const activeColumnId = active.data.current?.sortable.containerId
+    const overColumnId = over?.data.current?.sortable.containerId
+
+    console.log('activeColumnId:', activeColumnId)
+    console.log('overColumnId:', overColumnId)
   }
   return (
     <DndContext

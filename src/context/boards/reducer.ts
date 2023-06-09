@@ -7,7 +7,7 @@ export type Action =
   | { type: 'REORDER_TASK_IN_COLUMN' }
   | { type: 'REORDER_TASK_BETWEEN_COLUMNS' }
   | { type: 'ADD_COLUMN' }
-  | { type: 'ADD_TBoard' }
+  | { type: 'ADD_Board' }
 
 export const reducer = (state: IBoardContext, action: Action) => {
   switch (action.type) {
