@@ -1,8 +1,8 @@
 import { createContext, useReducer } from 'react'
-import { Action, reducer } from './reducer'
-import { IBoardContext } from './types'
+import { Action, IBoardContext, reducer } from './'
+import { initialBoardData } from '../../data'
 
-const initialState = { currentBoard: null, boards: {} }
+const initialState = { currentBoard: initialBoardData, boards: {} }
 
 export const BoardContext = createContext<
   [IBoardContext, React.Dispatch<Action>]

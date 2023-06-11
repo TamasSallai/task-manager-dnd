@@ -1,5 +1,5 @@
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { ITask } from '../context/boards/types'
+import { ITask } from '../context/boards'
 import SortableTask from './SortableTask'
 
 type Props = {

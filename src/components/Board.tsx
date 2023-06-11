@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { IBoard, ITask, useBoardContext } from '../context/boards'
 import {
   DndContext,
   DragStartEvent,
@@ -6,27 +7,25 @@ import {
   DragEndEvent,
   DragOverlay,
 } from '@dnd-kit/core'
-import { ITask } from '../context/boards/types'
 import Column from './Column'
-
 import SortableTask from './SortableTask'
-import { useBoardContext } from '../context/boards/hook'
 
-const Board = () => {
-  const { currentBoard } = useBoardContext()
+type Props = {
+  board: IBoard
+}
+
+const Board = ({ board }: Props) => {
+  const { columns } = board
+  const [, dispatch] = useBoardContext()
   const [dragging, setDragging] = useState<ITask | null>(null)
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e
     const columnId = active.data.current?.sortable.containerId
-    console.log(currentBoard.columns)
-
-    const activeTask = initialTableData.columns[columnId].tasks.find(
+    const activeTask = columns[columnId].tasks.find(
       (task) => task.id === active.id
     )
-    if (activeTask) {
-      setDragging(activeTask)
-    }
+    if (activeTask) setDragging(activeTask)
   }
 
   const handleDragOver = (e: DragOverEvent) => {
@@ -34,13 +33,25 @@ const Board = () => {
   }
 
   const handleDragEnd = (e: DragEndEvent) => {
-    console.log('drag end')
     const { active, over } = e
     const activeColumnId = active.data.current?.sortable.containerId
     const overColumnId = over?.data.current?.sortable.containerId
 
-    console.log('activeColumnId:', activeColumnId)
-    console.log('overColumnId:', overColumnId)
+    if (!activeColumnId || !overColumnId || activeColumnId !== overColumnId)
+      return
+
+    const oldIndex = board.columns[activeColumnId].tasks.findIndex(
+      (task) => task.id === active.id
+    )
+
+    const newIndex = board.columns[activeColumnId].tasks.findIndex(
+      (task) => task.id === over.id
+    )
+
+    dispatch({
+      type: 'REORDER_TASK',
+      payload: { activeColumnId, oldIndex, newIndex },
+    })
   }
   return (
     <DndContext
