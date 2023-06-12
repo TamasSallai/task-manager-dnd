@@ -3,11 +3,18 @@
   gap: 2rem;
 }
 
-.column {
+.column-outer-container {
   width: 300px;
+}
+
+.column-inner-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.column-title {
+  font-size: 1.2rem;
 }
 
 .sortable-task {

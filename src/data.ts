@@ -47,5 +47,10 @@ export const initialBoardData: IBoard = {
         },
       ],
     },
+    columnId4: {
+      id: 'columnId4',
+      name: 'Column 4 name',
+      tasks: [],
+    },
   },
 }

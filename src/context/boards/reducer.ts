@@ -1,5 +1,4 @@
-import { arrayMove } from '@dnd-kit/sortable'
-import { IBoardContext } from './'
+import { IBoardContext, ITask } from './'
 
 export type Action =
   | { type: 'ADD_TASK' }
@@ -9,11 +8,17 @@ export type Action =
       type: 'REORDER_TASK'
       payload: {
         activeColumnId: string
-        oldIndex: number
-        newIndex: number
+        newTaskArray: ITask[]
       }
     }
-  | { type: 'REORDER_TASK_BETWEEN_COLUMNS' }
+  | {
+      type: 'REORDER_TASK_BETWEEN_COLUMNS'
+      payload: {
+        activeColumnId: string
+        overColumnId: string
+        draggingTask: ITask
+      }
+    }
   | { type: 'ADD_COLUMN' }
 
 export const reducer = (state: IBoardContext, action: Action) => {
@@ -25,7 +30,7 @@ export const reducer = (state: IBoardContext, action: Action) => {
     case 'DELETE_TASK':
       return state
     case 'REORDER_TASK': {
-      const { activeColumnId, oldIndex, newIndex } = action.payload
+      const { activeColumnId, newTaskArray } = action.payload
 
       if (!state.currentBoard) return state
 
@@ -37,18 +42,40 @@ export const reducer = (state: IBoardContext, action: Action) => {
             ...state.currentBoard?.columns,
             [activeColumnId]: {
               ...state.currentBoard.columns[activeColumnId],
-              tasks: arrayMove(
-                state.currentBoard.columns[activeColumnId].tasks,
-                oldIndex,
-                newIndex
-              ),
+              tasks: newTaskArray,
             },
           },
         },
       }
     }
-    case 'REORDER_TASK_BETWEEN_COLUMNS':
-      return state
+    case 'REORDER_TASK_BETWEEN_COLUMNS': {
+      const { activeColumnId, overColumnId, draggingTask } = action.payload
+
+      if (!state.currentBoard) return state
+
+      return {
+        ...state,
+        currentBoard: {
+          ...state.currentBoard,
+          columns: {
+            ...state.currentBoard.columns,
+            [activeColumnId]: {
+              ...state.currentBoard.columns[activeColumnId],
+              tasks: state.currentBoard.columns[activeColumnId].tasks.filter(
+                (task) => task.id !== draggingTask.id
+              ),
+            },
+            [overColumnId]: {
+              ...state.currentBoard.columns[overColumnId],
+              tasks:
+                state.currentBoard.columns[overColumnId].tasks.concat(
+                  draggingTask
+                ),
+            },
+          },
+        },
+      }
+    }
     case 'ADD_COLUMN':
       return state
     default:

@@ -9,6 +9,8 @@ import {
 } from '@dnd-kit/core'
 import Column from './Column'
 import SortableTask from './SortableTask'
+import { arrayMove } from '@dnd-kit/sortable'
+import { findColumnId } from '../utils/findColumnId'
 
 type Props = {
   board: IBoard
@@ -17,7 +19,7 @@ type Props = {
 const Board = ({ board }: Props) => {
   const { columns } = board
   const [, dispatch] = useBoardContext()
-  const [dragging, setDragging] = useState<ITask | null>(null)
+  const [draggingTask, setTaskDragging] = useState<ITask | null>(null)
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e
@@ -25,14 +27,29 @@ const Board = ({ board }: Props) => {
     const activeTask = columns[columnId].tasks.find(
       (task) => task.id === active.id
     )
-    if (activeTask) setDragging(activeTask)
+    if (activeTask) setTaskDragging(activeTask)
   }
 
   const handleDragOver = (e: DragOverEvent) => {
-    console.log('drag over')
+    const { active, over } = e
+    const activeColumnId = findColumnId(board, active.id.toString())
+    const overColumnId = over && findColumnId(board, over.id.toString())
+
+    if (
+      !draggingTask ||
+      !activeColumnId ||
+      !overColumnId ||
+      activeColumnId === overColumnId
+    )
+      return
+
+    dispatch({
+      type: 'REORDER_TASK_BETWEEN_COLUMNS',
+      payload: { activeColumnId, overColumnId, draggingTask },
+    })
   }
 
-  const handleDragEnd = (e: DragEndEvent) => {
+  const handleDragEnd = async (e: DragEndEvent) => {
     const { active, over } = e
     const activeColumnId = active.data.current?.sortable.containerId
     const overColumnId = over?.data.current?.sortable.containerId
@@ -48,9 +65,15 @@ const Board = ({ board }: Props) => {
       (task) => task.id === over.id
     )
 
+    const newTaskArray = arrayMove(
+      board.columns[activeColumnId].tasks,
+      oldIndex,
+      newIndex
+    )
+
     dispatch({
       type: 'REORDER_TASK',
-      payload: { activeColumnId, oldIndex, newIndex },
+      payload: { activeColumnId, newTaskArray },
     })
   }
   return (
@@ -64,7 +87,9 @@ const Board = ({ board }: Props) => {
           <Column key={column.id} {...column} />
         ))}
       </div>
-      <DragOverlay>{dragging && <SortableTask {...dragging} />}</DragOverlay>
+      <DragOverlay>
+        {draggingTask && <SortableTask {...draggingTask} />}
+      </DragOverlay>
     </DndContext>
   )
 }
