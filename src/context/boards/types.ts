@@ -19,5 +19,5 @@ export interface IBoard {
 
 export interface IBoardContext {
   currentBoard: IBoard | null
-  boards: { [id: string]: IBoard }
+  boards: IBoard[]
 }

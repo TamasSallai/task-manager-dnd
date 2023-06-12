@@ -1,6 +1,8 @@
-import { IBoardContext, ITask } from './'
+import { IBoard, IBoardContext, ITask } from './'
 
 export type Action =
+  | { type: 'SET_BOARDS'; payload: { boards: IBoard[] } }
+  | { type: 'SELECT_BOARD'; payload: { board: IBoard } }
   | { type: 'ADD_TASK' }
   | { type: 'EDIT_TASK' }
   | { type: 'DELETE_TASK' }
@@ -23,6 +25,18 @@ export type Action =
 
 export const reducer = (state: IBoardContext, action: Action) => {
   switch (action.type) {
+    case 'SET_BOARDS': {
+      const { boards } = action.payload
+      console.log(boards)
+
+      return {
+        ...state,
+        boards,
+      }
+    }
+    case 'SELECT_BOARD': {
+      return { ...state, currentBoard: action.payload.board }
+    }
     case 'ADD_TASK':
       return state
     case 'EDIT_TASK':
