@@ -3,12 +3,12 @@ import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 
 export const createNewBoardWithRandomValues = async () => {
-  const numberOfColumn = Math.floor(Math.random() * 5)
+  const numberOfColumn = Math.floor(Math.random() * 5) + 2
 
   const columns = []
 
   for (let i = 0; i < numberOfColumn; i++) {
-    const numberOfTasks = Math.floor(Math.random() * 5)
+    const numberOfTasks = Math.floor(Math.random() * 5) + 1
     const tasks = []
 
     for (let j = 0; j < numberOfTasks; j++) {
