@@ -14,10 +14,11 @@ export type Action =
       }
     }
   | {
-      type: 'REORDER_TASK_BETWEEN_COLUMNS'
+      type: 'MOVE_TASK_BETWEEN_COLUMNS'
       payload: {
         activeColumnId: string
         overColumnId: string
+        overIndex: number
         draggingTask: ITask
       }
     }
@@ -27,7 +28,6 @@ export const reducer = (state: IBoardContext, action: Action) => {
   switch (action.type) {
     case 'SET_BOARDS': {
       const { boards } = action.payload
-      console.log(boards)
 
       return {
         ...state,
@@ -62,8 +62,9 @@ export const reducer = (state: IBoardContext, action: Action) => {
         },
       }
     }
-    case 'REORDER_TASK_BETWEEN_COLUMNS': {
-      const { activeColumnId, overColumnId, draggingTask } = action.payload
+    case 'MOVE_TASK_BETWEEN_COLUMNS': {
+      const { activeColumnId, overColumnId, overIndex, draggingTask } =
+        action.payload
 
       if (!state.currentBoard) return state
 
@@ -81,10 +82,16 @@ export const reducer = (state: IBoardContext, action: Action) => {
             },
             [overColumnId]: {
               ...state.currentBoard.columns[overColumnId],
-              tasks:
-                state.currentBoard.columns[overColumnId].tasks.concat(
-                  draggingTask
+              tasks: [
+                ...state.currentBoard.columns[overColumnId].tasks.slice(
+                  0,
+                  overIndex
                 ),
+                draggingTask,
+                ...state.currentBoard.columns[overColumnId].tasks.slice(
+                  overIndex
+                ),
+              ],
             },
           },
         },

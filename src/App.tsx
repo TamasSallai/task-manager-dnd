@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { IBoard, useBoardContext } from './context/boards'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from './firebase'
+import { createNewBoardWithRandomValues } from './utils/createBoardWithRandomValues'
 import Board from './components/Board'
 import './App.css'
-import { createNewBoardWithRandomValues } from './utils/createBoardWithRandomValues'
 
 function App() {
   const [{ currentBoard, boards }, dispatch] = useBoardContext()
@@ -12,6 +12,8 @@ function App() {
   useEffect(() => {
     getDocs(collection(db, 'boards')).then((querySnapshot) => {
       const boards = querySnapshot.docs.map((doc) => doc.data() as IBoard)
+      console.log(boards)
+
       dispatch({ type: 'SET_BOARDS', payload: { boards } })
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps

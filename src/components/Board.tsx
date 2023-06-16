@@ -6,11 +6,13 @@ import {
   DragOverEvent,
   DragEndEvent,
   DragOverlay,
+  useSensors,
+  useSensor,
+  PointerSensor,
 } from '@dnd-kit/core'
+import { arrayMove } from '@dnd-kit/sortable'
 import Column from './Column'
 import SortableTask from './SortableTask'
-import { arrayMove } from '@dnd-kit/sortable'
-import { findColumnId } from '../utils/findColumnId'
 
 type Props = {
   board: IBoard
@@ -20,6 +22,8 @@ const Board = ({ board }: Props) => {
   const { columns } = board
   const [, dispatch] = useBoardContext()
   const [draggingTask, setTaskDragging] = useState<ITask | null>(null)
+
+  const sensors = useSensors(useSensor(PointerSensor))
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e
@@ -32,8 +36,11 @@ const Board = ({ board }: Props) => {
 
   const handleDragOver = (e: DragOverEvent) => {
     const { active, over } = e
-    const activeColumnId = findColumnId(board, active.id.toString())
-    const overColumnId = over && findColumnId(board, over.id.toString())
+
+    if (!over) return
+
+    const activeColumnId = active.data.current?.sortable.containerId
+    const overColumnId = over?.data.current?.sortable.containerId || over?.id
 
     if (
       !draggingTask ||
@@ -43,32 +50,25 @@ const Board = ({ board }: Props) => {
     )
       return
 
+    const overIndex = over.data.current?.sortable.index || 0
+
     dispatch({
-      type: 'REORDER_TASK_BETWEEN_COLUMNS',
-      payload: { activeColumnId, overColumnId, draggingTask },
+      type: 'MOVE_TASK_BETWEEN_COLUMNS',
+      payload: { activeColumnId, overColumnId, overIndex, draggingTask },
     })
   }
 
   const handleDragEnd = async (e: DragEndEvent) => {
     const { active, over } = e
+    if (!over || !active || active.id === over.id) return
     const activeColumnId = active.data.current?.sortable.containerId
-    const overColumnId = over?.data.current?.sortable.containerId
-
-    if (!activeColumnId || !overColumnId || activeColumnId !== overColumnId)
-      return
-
-    const oldIndex = board.columns[activeColumnId].tasks.findIndex(
-      (task) => task.id === active.id
-    )
-
-    const newIndex = board.columns[activeColumnId].tasks.findIndex(
-      (task) => task.id === over.id
-    )
+    const activeIndex = active.data.current?.sortable.index
+    const overIndex = over.data.current?.sortable.index
 
     const newTaskArray = arrayMove(
       board.columns[activeColumnId].tasks,
-      oldIndex,
-      newIndex
+      activeIndex,
+      overIndex
     )
 
     dispatch({
@@ -78,6 +78,7 @@ const Board = ({ board }: Props) => {
   }
   return (
     <DndContext
+      sensors={sensors}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
