@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
-import { IBoard } from './context/table/types'
+import { IBoard } from './context/boards'
 
-export const initialTableData: IBoard = {
+export const initialBoardData: IBoard = {
   id: 'tableId',
   name: 'Table name',
   columns: {
@@ -46,6 +46,11 @@ export const initialTableData: IBoard = {
           name: 'Name 6',
         },
       ],
+    },
+    columnId4: {
+      id: 'columnId4',
+      name: 'Column 4 name',
+      tasks: [],
     },
   },
 }

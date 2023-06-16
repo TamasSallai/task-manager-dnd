@@ -1,5 +1,6 @@
+import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { ITask } from '../context/table/types'
+import { ITask } from '../context/boards'
 import SortableTask from './SortableTask'
 
 type Props = {
@@ -8,13 +9,15 @@ type Props = {
 }
 
 const Column = ({ id, tasks }: Props) => {
+  const { setNodeRef } = useDroppable({ id })
+
   return (
     <SortableContext
       id={id}
       items={tasks}
       strategy={verticalListSortingStrategy}
     >
-      <div className="column">
+      <div className="column-inner-container" ref={setNodeRef}>
         {tasks.map((task) => (
           <SortableTask key={task.id} {...task} />
         ))}
