@@ -20,5 +20,6 @@ export interface IBoard {
 
 export interface IBoardContext {
   currentBoard: IBoard | null
+  backupBoard: IBoard | null
   boards: IBoard[]
 }
