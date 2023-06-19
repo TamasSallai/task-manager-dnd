@@ -5,6 +5,7 @@ export interface ITask {
 
 export interface IColumn {
   id: string
+  index: number
   name: string
   tasks: ITask[]
 }

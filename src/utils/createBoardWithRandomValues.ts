@@ -21,6 +21,7 @@ export const createNewBoardWithRandomValues = async () => {
 
     const column = {
       id: uuidv4(),
+      index: i,
       name: `Column ${i + 1}`,
       tasks: tasks,
     }
