@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { IBoard, ITask, useBoardContext } from '../context/boards'
+import { doc, setDoc } from 'firebase/firestore'
+import { db } from '../firebase'
 import {
   DndContext,
   DragStartEvent,
@@ -21,17 +23,17 @@ type Props = {
 const Board = ({ board }: Props) => {
   const { columns } = board
   const [, dispatch] = useBoardContext()
-  const [draggingTask, setTaskDragging] = useState<ITask | null>(null)
+  const [draggingTask, setDraggingTask] = useState<ITask | null>(null)
 
   const sensors = useSensors(useSensor(PointerSensor))
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e
-    const columnId = active.data.current?.sortable.containerId
+    const columnId = active.data.current?.sortable.containerId as string
     const activeTask = columns[columnId].tasks.find(
       (task) => task.id === active.id
     )
-    if (activeTask) setTaskDragging(activeTask)
+    if (activeTask) setDraggingTask(activeTask)
   }
 
   const handleDragOver = (e: DragOverEvent) => {
@@ -60,7 +62,9 @@ const Board = ({ board }: Props) => {
 
   const handleDragEnd = async (e: DragEndEvent) => {
     const { active, over } = e
-    if (!over || !active || active.id === over.id) return
+
+    if (!over || !active) return
+
     const activeColumnId = active.data.current?.sortable.containerId
     const activeIndex = active.data.current?.sortable.index
     const overIndex = over.data.current?.sortable.index
@@ -75,7 +79,15 @@ const Board = ({ board }: Props) => {
       type: 'REORDER_TASK',
       payload: { activeColumnId, newTaskArray },
     })
+
+    try {
+      setDoc(doc(db, 'boards', board.id), board)
+    } catch (error) {
+      dispatch({ type: 'FALLBACK_BOARD' })
+      alert(error)
+    }
   }
+
   return (
     <DndContext
       sensors={sensors}
