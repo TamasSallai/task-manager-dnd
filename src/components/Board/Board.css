@@ -1,0 +1,24 @@
+.board-window {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-header {
+  height: 4rem;
+  padding: 0 1.6rem;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #086dc6, #0c75d2);
+}
+
+.board-name {
+  font-size: 1.5rem;
+  color: var(--clr-white);
+}
+
+.board-content {
+  padding: 0.8rem;
+  display: flex;
+  gap: 0.8rem;
+}
