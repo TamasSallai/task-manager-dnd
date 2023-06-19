@@ -84,9 +84,11 @@ const Board = ({ board }: Props) => {
       onDragEnd={handleDragEnd}
     >
       <div className="board">
-        {Object.values(columns).map((column) => (
-          <Column key={column.id} {...column} />
-        ))}
+        {Object.values(columns)
+          .sort((a, b) => a.index - b.index)
+          .map((column) => (
+            <Column key={column.id} {...column} />
+          ))}
       </div>
       <DragOverlay>
         {draggingTask && <SortableTask {...draggingTask} />}

@@ -12,8 +12,6 @@ function App() {
   useEffect(() => {
     getDocs(collection(db, 'boards')).then((querySnapshot) => {
       const boards = querySnapshot.docs.map((doc) => doc.data() as IBoard)
-      console.log(boards)
-
       dispatch({ type: 'SET_BOARDS', payload: { boards } })
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
