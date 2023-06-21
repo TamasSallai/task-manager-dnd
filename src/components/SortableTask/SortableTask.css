@@ -1,0 +1,41 @@
+.sortable-task {
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--clr-text);
+  background-color: var(--clr-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  transition: box-shadow 150ms ease-in;
+}
+
+.sortable-task:hover {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.sortable-task-name {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.sortable-task:hover > .icon-container {
+  display: flex;
+}
+
+.button-with-icon {
+  min-height: 20px;
+  min-width: 20px;
+  padding: 0px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.button-with-icon:active {
+  scale: 1.125;
+}

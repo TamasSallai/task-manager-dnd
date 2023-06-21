@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { IBoard, ITask, useBoardContext } from '../context/boards'
+import { IBoard, ITask, useBoardContext } from '../../context/boards'
 import { doc, setDoc } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import {
   DndContext,
   DragStartEvent,
@@ -10,11 +10,12 @@ import {
   DragOverlay,
   useSensors,
   useSensor,
-  PointerSensor,
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
-import Column from './Column'
-import SortableTask from './SortableTask'
+import { PointerSensor } from '../../utils/extendSensors'
+import Column from '../Column/Column'
+import SortableTask from '../SortableTask/SortableTask'
+import './Board.css'
 
 type Props = {
   board: IBoard
@@ -89,23 +90,28 @@ const Board = ({ board }: Props) => {
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragStart={handleDragStart}
-      onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="board">
-        {Object.values(columns)
-          .sort((a, b) => a.index - b.index)
-          .map((column) => (
-            <Column key={column.id} {...column} />
-          ))}
+    <div className="board-window">
+      <div className="board-header">
+        <h1 className="board-name">{board.name}</h1>
       </div>
-      <DragOverlay>
-        {draggingTask && <SortableTask {...draggingTask} />}
-      </DragOverlay>
-    </DndContext>
+      <DndContext
+        sensors={sensors}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="board-content">
+          {Object.values(columns)
+            .sort((a, b) => a.index - b.index)
+            .map((column) => (
+              <Column key={column.id} {...column} />
+            ))}
+        </div>
+        <DragOverlay>
+          {draggingTask && <SortableTask {...draggingTask} />}
+        </DragOverlay>
+      </DndContext>
+    </div>
   )
 }
 

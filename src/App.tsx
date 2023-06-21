@@ -1,32 +1,15 @@
 import { useBoardContext } from './context/boards'
-import { createNewBoardWithRandomValues } from './utils/createBoardWithRandomValues'
-import Board from './components/Board'
+
+import Board from './components/Board/Board'
 import './App.css'
+import SideBar from './components/SideBar/SideBar'
 
 function App() {
-  const [{ currentBoard, boards }, dispatch] = useBoardContext()
+  const [{ currentBoard, boards }] = useBoardContext()
 
   return (
     <div className="flex-container">
-      <div className="side-bar">
-        <button onClick={createNewBoardWithRandomValues}>Add Board</button>
-        <div className="board-list">
-          {boards.map((board) => (
-            <button
-              key={board.id}
-              onClick={() =>
-                dispatch({
-                  type: 'SELECT_BOARD',
-                  payload: { board: board },
-                })
-              }
-            >
-              {board.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
+      <SideBar boards={boards} />
       {currentBoard && <Board board={currentBoard} />}
     </div>
   )

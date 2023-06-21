@@ -1,0 +1,27 @@
+.board-window {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-header {
+  min-height: 3.6rem;
+  padding: 0 1.6rem;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, #0a57b9, #0c75d2);
+  border-bottom: 1px solid var(--clr-bg);
+}
+
+.board-name {
+  font-size: 1.5rem;
+  color: var(--clr-white);
+}
+
+.board-content {
+  width: 100%;
+  height: 100%;
+  padding: 0.8rem;
+  display: flex;
+  gap: 0.8rem;
+}
