@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { IBoard, useBoardContext } from '../../context/boards'
+import { createNewBoardWithRandomValues } from '../../utils/createBoardWithRandomValues'
 import './SideBar.css'
 
 type Props = {
@@ -36,7 +37,12 @@ const SideBar = ({ boards }: Props) => {
       <div className="sidebar-section" data-expanded={isExpanded}>
         <div className="sidebar-section-header">
           <h3 className="sidebar-section-title">Boards</h3>
-          <button className="add-board-button">Add Board</button>
+          <button
+            className="add-board-button"
+            onClick={createNewBoardWithRandomValues}
+          >
+            Add Board
+          </button>
         </div>
         <ul>
           {boards.map((board) => (
