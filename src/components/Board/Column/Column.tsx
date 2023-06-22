@@ -1,7 +1,9 @@
+import { useState } from 'react'
+import { ITask } from '../../../context/boards'
 import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { ITask } from '../../../context/boards'
 import SortableTask from './SortableTask/SortableTask'
+import TaskModal from '../TaskModal/TaskModal'
 import './Column.css'
 
 type Props = {
@@ -12,6 +14,7 @@ type Props = {
 
 const Column = ({ id, name, tasks }: Props) => {
   const { setNodeRef } = useDroppable({ id })
+  const [showModal, setShowModal] = useState(false)
 
   return (
     <div className="column" ref={setNodeRef}>
@@ -26,7 +29,7 @@ const Column = ({ id, name, tasks }: Props) => {
             <SortableTask key={task.id} {...task} />
           ))}
         </div>
-        <button className="new-task-button">
+        <button className="new-task-button" onClick={() => setShowModal(true)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -43,6 +46,10 @@ const Column = ({ id, name, tasks }: Props) => {
           Create task
         </button>
       </SortableContext>
+
+      {showModal && (
+        <TaskModal columnId={id} closeModal={() => setShowModal(false)} />
+      )}
     </div>
   )
 }
