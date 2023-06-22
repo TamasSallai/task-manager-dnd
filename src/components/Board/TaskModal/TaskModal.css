@@ -1,0 +1,33 @@
+dialog {
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+}
+
+dialog::backdrop {
+  background-color: #00000050;
+}
+
+.column-modal-title {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.column-modal-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem;
+}
+
+.column-modal-button-container {
+  padding: 1.4rem;
+  display: flex;
+  gap: 1rem;
+  border-top: 1px solid var(--clr-grey);
+}
+
+.column-modal-button-container > * {
+  min-width: 10rem;
+  padding: 0.8rem;
+  flex: 1;
+}
