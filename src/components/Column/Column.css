@@ -4,7 +4,7 @@
   padding: 1rem;
   border: none;
   border-radius: 8px;
-  background-color: var(--clr-grey);
+  background-color: var(--clr-grey-light);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
@@ -31,7 +31,7 @@
   border-radius: 4px;
   background-color: transparent;
   color: var(--clr-text);
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 400;
   cursor: pointer;
   transition: background-color 100ms ease-in;
@@ -42,8 +42,4 @@
   width: 1.3rem;
   margin-right: 0.3rem;
   color: var(--clr-text);
-}
-
-.new-task-button:hover {
-  background-color: var(--clr-white);
 }

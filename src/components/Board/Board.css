@@ -9,8 +9,8 @@
   padding: 0 1.6rem;
   display: flex;
   align-items: center;
-  background: linear-gradient(90deg, #0a57b9, #0c75d2);
-  border-bottom: 1px solid var(--clr-bg);
+  background: linear-gradient(90deg, var(--clr-bg-dark), var(--clr-bg-light));
+  border-bottom: 1px solid var(--clr-bg-light);
 }
 
 .board-name {
@@ -24,4 +24,5 @@
   padding: 0.8rem;
   display: flex;
   gap: 0.8rem;
+  background-color: var(--clr-bg-light);
 }

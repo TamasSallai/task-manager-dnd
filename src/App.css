@@ -1,21 +1,49 @@
 :root {
-  --clr-bg: #0d7adc;
+  --clr-bg-dark: #0a57b9;
+  --clr-bg-light: #0c75d2;
+  --clr-hover: #669be1;
   --clr-text: #2b2b2b;
-  --clr-grey: #f1f2f4;
+  --clr-grey-light: #f1f2f4;
+  --clr-grey: #c4c4c4;
   --clr-white: #ffffff;
+  --clr-accent: #10b981;
+  --clr-accent-light: #34d399;
 }
 
-body,
 html,
+body,
 #root {
   height: 100%;
   color: var(--clr-text);
-  background-color: var(--clr-bg);
+  background-color: var(--clr-bg-dark);
 }
 
 .flex-container {
   width: 100%;
   height: 100%;
   display: flex;
-  overflow: hidden;
+}
+
+.button-primary {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--clr-gray);
+  border-radius: 4px;
+  color: var(--clr-text);
+  background-color: var(--clr-white);
+  cursor: pointer;
+}
+
+.button-primary:active {
+  transform: scale(0.95);
+}
+
+.button-primary.filled {
+  color: var(--clr-white);
+  border: 1px solid var(--clr-accent);
+  background-color: var(--clr-accent);
+}
+
+.button-primary.filled:hover {
+  border: 1px solid var(--clr-accent);
+  background-color: var(--clr-accent-light);
 }

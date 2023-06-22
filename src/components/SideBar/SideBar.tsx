@@ -38,7 +38,7 @@ const SideBar = ({ boards }: Props) => {
         <div className="sidebar-section-header">
           <h3 className="sidebar-section-title">Boards</h3>
           <button
-            className="add-board-button"
+            className="button-primary filled"
             onClick={createNewBoardWithRandomValues}
           >
             Add Board

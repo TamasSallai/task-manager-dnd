@@ -6,10 +6,6 @@
   box-sizing: border-box;
 }
 
-#root {
-  width: 100vw;
-}
-
 body,
 h1,
 h3,
@@ -30,6 +26,4 @@ button {
 body {
   font-size: 16px;
   font-family: 'DM Sans', sans-serif;
-  background-color: #282c34;
-  color: #ffffff;
 }
