@@ -26,3 +26,27 @@
   gap: 0.8rem;
   background-color: var(--clr-bg-light);
 }
+
+.add-column-button {
+  display: flex;
+  width: 18rem;
+  padding: 0.8rem;
+  height: fit-content;
+  border: none;
+  border-radius: 8px;
+  background-color: #d6d6d654;
+  color: var(--clr-white);
+  font-size: 0.92rem;
+  transition: background-color 100ms ease-in-out;
+  cursor: pointer;
+}
+
+.add-column-button > svg {
+  height: 1.3rem;
+  width: 1.3rem;
+  margin-right: 0.3rem;
+}
+
+.add-column-button:hover {
+  background-color: #d6d6d626;
+}
