@@ -30,6 +30,7 @@ body,
   border-radius: 4px;
   color: var(--clr-text);
   background-color: var(--clr-white);
+  transition: background-color 100ms ease-in-out;
   cursor: pointer;
 }
 
