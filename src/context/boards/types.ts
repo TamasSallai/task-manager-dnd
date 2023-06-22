@@ -13,6 +13,7 @@ export interface IColumn {
 export interface IBoard {
   id: string
   name: string
+  lastColumnIndex: number
   columns: {
     [columnId: string]: IColumn
   }

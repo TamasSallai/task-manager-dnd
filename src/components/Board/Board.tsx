@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IBoard, ITask, useBoardContext } from '../../context/boards'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
 import {
   DndContext,
@@ -14,6 +14,7 @@ import {
 import { arrayMove } from '@dnd-kit/sortable'
 import { PointerSensor } from '../../utils/extendSensors'
 import Column from '../Column/Column'
+import ColumnModal from '../ColumnModal/ColumnModal'
 import SortableTask from '../SortableTask/SortableTask'
 import './Board.css'
 
@@ -25,6 +26,18 @@ const Board = ({ board }: Props) => {
   const { columns } = board
   const [, dispatch] = useBoardContext()
   const [draggingTask, setDraggingTask] = useState<ITask | null>(null)
+  const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'boards', board.id), (doc) => {
+      dispatch({
+        type: 'SELECT_BOARD',
+        payload: { board: doc.data() as IBoard },
+      })
+    })
+
+    return () => unsub()
+  }, [board.id, dispatch])
 
   const sensors = useSensors(useSensor(PointerSensor))
 
@@ -106,11 +119,37 @@ const Board = ({ board }: Props) => {
             .map((column) => (
               <Column key={column.id} {...column} />
             ))}
+          <button
+            className="add-column-button"
+            onClick={() => setShowModal(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            Add new column
+          </button>
         </div>
         <DragOverlay>
           {draggingTask && <SortableTask {...draggingTask} />}
         </DragOverlay>
       </DndContext>
+      {showModal && (
+        <ColumnModal
+          closeModal={() => setShowModal(false)}
+          boardId={board.id}
+          lastColumnIndex={board.lastColumnIndex}
+        />
+      )}
     </div>
   )
 }
