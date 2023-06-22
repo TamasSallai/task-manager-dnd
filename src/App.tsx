@@ -1,8 +1,7 @@
 import { useBoardContext } from './context/boards'
-
 import Board from './components/Board/Board'
-import './App.css'
 import SideBar from './components/SideBar/SideBar'
+import './App.css'
 
 function App() {
   const [{ currentBoard, boards }] = useBoardContext()

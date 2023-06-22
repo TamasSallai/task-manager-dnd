@@ -1,7 +1,7 @@
 import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { ITask } from '../../context/boards'
-import SortableTask from '../SortableTask/SortableTask'
+import { ITask } from '../../../context/boards'
+import SortableTask from './SortableTask/SortableTask'
 import './Column.css'
 
 type Props = {
