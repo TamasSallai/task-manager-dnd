@@ -23,13 +23,11 @@ export const BoardProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const q = query(collection(db, 'boards'))
-
     const unsub = onSnapshot(q, (querySnapshot) => {
       const boards = querySnapshot.docs.map((doc) => doc.data() as IBoard)
       dispatch({ type: 'SET_BOARDS', payload: { boards } })
       setIsLoading(false)
     })
-
     return () => unsub()
   }, [])
 
