@@ -31,7 +31,7 @@ const Board = ({ board }: Props) => {
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'boards', board.id), (doc) => {
       dispatch({
-        type: 'SELECT_BOARD',
+        type: 'SET_CURRENT_BOARD',
         payload: { board: doc.data() as IBoard },
       })
     })

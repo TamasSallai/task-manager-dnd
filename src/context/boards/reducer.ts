@@ -2,11 +2,8 @@ import { IBoard, IBoardContext, ITask } from './'
 
 export type Action =
   | { type: 'SET_BOARDS'; payload: { boards: IBoard[] } }
-  | { type: 'SELECT_BOARD'; payload: { board: IBoard } }
+  | { type: 'SET_CURRENT_BOARD'; payload: { board: IBoard } }
   | { type: 'FALLBACK_BOARD' }
-  | { type: 'ADD_TASK' }
-  | { type: 'EDIT_TASK' }
-  | { type: 'DELETE_TASK' }
   | {
       type: 'REORDER_TASK'
       payload: {
@@ -23,7 +20,6 @@ export type Action =
         draggingTask: ITask
       }
     }
-  | { type: 'ADD_COLUMN' }
 
 export const reducer = (state: IBoardContext, action: Action) => {
   switch (action.type) {
@@ -32,25 +28,17 @@ export const reducer = (state: IBoardContext, action: Action) => {
         ...state,
         boards: action.payload.boards,
       }
-
-    case 'SELECT_BOARD':
+    case 'SET_CURRENT_BOARD':
       return {
         ...state,
         currentBoard: action.payload.board,
         backupBoard: action.payload.board,
       }
-
     case 'FALLBACK_BOARD':
       return {
         ...state,
         currentBoard: state.backupBoard,
       }
-    case 'ADD_TASK':
-      return state
-    case 'EDIT_TASK':
-      return state
-    case 'DELETE_TASK':
-      return state
     case 'REORDER_TASK': {
       const { activeColumnId, newTaskArray } = action.payload
 
@@ -105,8 +93,6 @@ export const reducer = (state: IBoardContext, action: Action) => {
         },
       }
     }
-    case 'ADD_COLUMN':
-      return state
     default:
       return state
   }

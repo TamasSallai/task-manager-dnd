@@ -50,7 +50,7 @@ const SideBar = ({ boards }: Props) => {
               <a
                 className="board-link"
                 onClick={() =>
-                  dispatch({ type: 'SELECT_BOARD', payload: { board } })
+                  dispatch({ type: 'SET_CURRENT_BOARD', payload: { board } })
                 }
               >
                 {board.name}
