@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
-import { db } from '../../firebase'
-import { useBoardContext } from '../../context/boards'
+import { db } from '../../../firebase'
+import { useBoardContext } from '../../../context/boards'
 import './TaskModal.css'
 
 type Props = {

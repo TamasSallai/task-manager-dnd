@@ -14,7 +14,7 @@ import {
 import { arrayMove } from '@dnd-kit/sortable'
 import { PointerSensor } from '../../../utils/extendSensors'
 import Column from './Column/Column'
-import ColumnModal from '../../ColumnModal/ColumnModal'
+import ColumnModal from '../../Modals/ColumnModal/ColumnModal'
 import SortableTask from './SortableTask/SortableTask'
 import './BoardBody.css'
 
