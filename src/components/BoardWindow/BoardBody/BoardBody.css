@@ -1,32 +1,15 @@
-.board-window {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.board-header {
-  width: 100%;
-  min-height: 3.6rem;
-  padding: 0 1.6rem;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(90deg, var(--clr-bg-dark), var(--clr-bg-light));
-  border-bottom: 1px solid var(--clr-bg-light);
-}
-
-.board-name {
-  font-size: 1.5rem;
-  color: var(--clr-white);
-}
-
-.board-content {
-  width: 100%;
+.board-container {
   height: 100%;
-  padding: 0.8rem;
+  padding: 1rem;
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+}
+
+.columns-container {
   display: flex;
   gap: 0.8rem;
   background-color: var(--clr-bg-light);
-  overflow-x: auto;
 }
 
 .add-column-button {
