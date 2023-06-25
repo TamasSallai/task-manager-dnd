@@ -21,6 +21,7 @@ body,
 .flex-container {
   height: 100%;
   display: flex;
+  overflow: hidden;
 }
 
 .button-primary {

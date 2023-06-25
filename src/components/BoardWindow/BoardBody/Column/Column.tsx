@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { ITask } from '../../../context/boards'
+import { ITask } from '../../../../context/boards'
 import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import SortableTask from './SortableTask/SortableTask'
-import TaskModal from '../TaskModal/TaskModal'
+import SortableTask from '../SortableTask/SortableTask'
+import TaskModal from '../../../Modals/TaskModal/TaskModal'
 import './Column.css'
 
 type Props = {

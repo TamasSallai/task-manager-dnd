@@ -1,5 +1,5 @@
 import { useBoardContext } from './context/boards'
-import Board from './components/Board/Board'
+import BoardWindow from './components/BoardWindow/BoardWindow'
 import SideBar from './components/SideBar/SideBar'
 import './App.css'
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="flex-container">
       <SideBar boards={boards} />
-      {currentBoard && <Board board={currentBoard} />}
+      {currentBoard && <BoardWindow board={currentBoard} />}
     </div>
   )
 }
